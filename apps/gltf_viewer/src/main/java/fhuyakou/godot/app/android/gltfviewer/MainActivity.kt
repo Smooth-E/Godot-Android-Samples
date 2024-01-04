@@ -1,5 +1,6 @@
 package fhuyakou.godot.app.android.gltfviewer
 
+import android.graphics.PixelFormat
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.godotengine.godot.Godot
@@ -31,8 +32,13 @@ class MainActivity: AppCompatActivity(), GodotHost {
                 .commitNowAllowingStateLoss()
         }
 
+        val surfaceView = godot!!.renderView!!.view
+        surfaceView.holder.setFormat(PixelFormat.TRANSLUCENT)
+        surfaceView.setZOrderOnTop(true)
+
         initAppPluginIfNeeded(godot!!)
 
+        /*
         var itemsSelectionFragment = supportFragmentManager.findFragmentById(R.id.item_selection_fragment_container)
         if (itemsSelectionFragment !is ItemsSelectionFragment) {
             itemsSelectionFragment = ItemsSelectionFragment.newInstance(1)
@@ -40,6 +46,7 @@ class MainActivity: AppCompatActivity(), GodotHost {
                 .replace(R.id.item_selection_fragment_container, itemsSelectionFragment)
                 .commitAllowingStateLoss()
         }
+        */
     }
 
     private fun initAppPluginIfNeeded(godot: Godot) {
