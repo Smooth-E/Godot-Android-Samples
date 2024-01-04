@@ -2,10 +2,16 @@ package fhuyakou.godot.app.android.gltfviewer
 
 import android.graphics.PixelFormat
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import org.godotengine.godot.Godot
 import org.godotengine.godot.GodotFragment
 import org.godotengine.godot.GodotHost
+import org.godotengine.godot.input.GodotEditText
 import org.godotengine.godot.plugin.GodotPlugin
 
 /**
@@ -36,9 +42,17 @@ class MainActivity: AppCompatActivity(), GodotHost {
         surfaceView.holder.setFormat(PixelFormat.TRANSLUCENT)
         surfaceView.setZOrderOnTop(true)
 
+        val parent = surfaceView!!.parent as ViewGroup
+        for (index in 0 until parent.childCount) {
+            val view = parent.getChildAt(index)
+            if (view is GodotEditText) {
+                view.setBackgroundResource(android.R.color.transparent)
+                Log.d("Something", "Transparent color is applied!")
+            }
+        }
+
         initAppPluginIfNeeded(godot!!)
 
-        /*
         var itemsSelectionFragment = supportFragmentManager.findFragmentById(R.id.item_selection_fragment_container)
         if (itemsSelectionFragment !is ItemsSelectionFragment) {
             itemsSelectionFragment = ItemsSelectionFragment.newInstance(1)
@@ -46,7 +60,6 @@ class MainActivity: AppCompatActivity(), GodotHost {
                 .replace(R.id.item_selection_fragment_container, itemsSelectionFragment)
                 .commitAllowingStateLoss()
         }
-        */
     }
 
     private fun initAppPluginIfNeeded(godot: Godot) {

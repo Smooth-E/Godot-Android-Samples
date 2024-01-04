@@ -25,4 +25,5 @@ class AppPlugin(godot: Godot) : GodotPlugin(godot) {
     internal fun showGLTF(glbFilepath: String) {
         emitSignal(SHOW_GLTF_SIGNAL.name, glbFilepath)
     }
+
 }
